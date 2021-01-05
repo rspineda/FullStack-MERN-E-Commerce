@@ -1,4 +1,10 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+cache
+.env
+node_modules
+.DS_Store
+
+client/node_modules
 
 # dependencies
 /node_modules
