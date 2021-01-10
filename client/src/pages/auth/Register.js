@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {auth} from '../../firebase';
-import {toast, ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import {toast} from 'react-toastify';
+
 
 
 const Register = () => {
@@ -35,7 +35,6 @@ const Register = () => {
         <div className="container p-5">
             <div className="row">
                 <div className="col-md-6 offset-md-3">
-                    <ToastContainer></ToastContainer>
                     <h4>Register</h4>
                     {registerForm()}
                 </div>
