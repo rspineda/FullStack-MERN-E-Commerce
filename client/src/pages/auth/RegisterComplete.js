@@ -9,12 +9,43 @@ const RegisterComplete = ({history}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    useState(()=>{
+    useEffect(()=>{
         setEmail(window.localStorage.getItem('emailForRegistration'));
     },[])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        //manual validation
+        if(!email || !password) {
+            toast.error('Email and password are required');
+            return;
+        }
+
+        if(password.length < 6) {
+            toast.error('Password must be at least 6 characters long');
+            return;
+        }
+
+        try {
+            const result = await auth.signInWithEmailLink(email, window.location.href);
+            //console.log("result from firebase:", result);
+            if(result.user.emailVerified){
+               //remove email from localstorage
+               window.localStorage.removeItem('emailForRegistration');
+               //get user id token(to comunicate with backend)
+                let user = auth.currentUser;
+                await user.updatePassword(password);
+                const idTokenResult = await user.getIdTokenResult();
+               //redux store
+
+               //redirect
+               history.push('/');
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error(error.message);
+        }
     };   
 
     const completeRegistrationForm = () => (
