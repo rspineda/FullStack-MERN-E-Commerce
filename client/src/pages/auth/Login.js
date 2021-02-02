@@ -4,6 +4,7 @@ import {toast} from 'react-toastify';
 import {Button} from 'antd';
 import { MailOutlined, GoogleOutlined} from '@ant-design/icons';
 import {useDispatch} from 'react-redux';
+import {Link} from 'react-router-dom';
 
 
 
@@ -85,6 +86,7 @@ const Login = ({history}) => {
                     {loading? (<h4 className="text-danger">Loading...</h4>) : <h4>Login</h4>}
                     {loginForm()}
                     <Button onClick={googleLogin} type="danger" className="mb-3" block shape="round" icon={<GoogleOutlined></GoogleOutlined>} size="large">Login with Google</Button>
+                    <Link to="/forgot/password" className="float-right text-danger">Forgot password ?</Link>
                 </div>
             </div>
         </div>
