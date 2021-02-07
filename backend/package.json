@@ -4,7 +4,7 @@
   "description": "Backend-for-MERN-ecommerce",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon server.js"
   },
   "author": "Ronald Pineda",
   "license": "ISC",
