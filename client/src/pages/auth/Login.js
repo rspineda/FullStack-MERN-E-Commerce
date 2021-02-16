@@ -43,19 +43,22 @@ const Login = ({history}) => {
 
             //sending token to backend
             createOrUpdateUser(idTokenResult.token)
-            .then((res)=> console.log('Create or update response:', res))
-            .catch()
-/*
-            dispatch({
-                type: "LOGGED_IN_USER",
-                payload: {
-                  email: user.email,
-                  token: idTokenResult.token
-                }
-            });
-            history.push('/');
- */           
-
+            .then((res)=> {
+                dispatch({
+                    type: "LOGGED_IN_USER",
+                    payload: {
+                      name: res.data.name,  
+                      email: res.data.email,
+                      token: idTokenResult.token,
+                      role: res.data.role,
+                      _id: res.data._id
+                    }
+                });
+            })
+            .catch();
+        
+            history.push('/'); 
+            
         }catch(error){
             console.log(error);
             toast.error(error.message);
@@ -69,13 +72,21 @@ const Login = ({history}) => {
         .then( async (result) => {
             const {user} = result;
             const idTokenResult = await user.getIdTokenResult();
-            dispatch({
-                type: "LOGGED_IN_USER",
-                payload: {
-                  email: user.email,
-                  token: idTokenResult.token
-                }
-            });
+            //sending token to backend
+            createOrUpdateUser(idTokenResult.token)
+            .then((res)=> {
+                dispatch({
+                    type: "LOGGED_IN_USER",
+                    payload: {
+                      name: res.data.name,  
+                      email: res.data.email,
+                      token: idTokenResult.token,
+                      role: res.data.role,
+                      _id: res.data._id
+                    }
+                });
+            })
+            .catch()
             history.push('/');
         })
         .catch((error) => {
