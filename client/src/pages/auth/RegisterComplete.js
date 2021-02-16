@@ -2,16 +2,8 @@ import React, {useState, useEffect} from 'react';
 import {auth} from '../../firebase';
 import {toast} from 'react-toastify';
 import {useDispatch, useSelector} from 'react-redux';
-import axios from 'axios';
+import {createOrUpdateUser} from '../../functions/auth'
 
-//sending client token to backend
-const createOrUpdateUser = async (authtoken) => {
-    return await  axios.post(`${process.env.REACT_APP_API}/create-or-update-user`, {}, {
-        headers: {
-            authtoken: authtoken
-        }
-    });
-};
 
 
 const RegisterComplete = ({history}) => {
@@ -52,7 +44,7 @@ const RegisterComplete = ({history}) => {
                 await user.updatePassword(password);
                 const idTokenResult = await user.getIdTokenResult();
 
-                //sending token to backend
+                //sending client token to backend (verification)
                 createOrUpdateUser(idTokenResult.token)
                 .then((res)=> {
                     dispatch({

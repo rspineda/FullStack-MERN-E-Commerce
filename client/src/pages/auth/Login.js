@@ -6,16 +6,7 @@ import { MailOutlined, GoogleOutlined} from '@ant-design/icons';
 import {useDispatch, useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
-
-//sending client token to backend
-const createOrUpdateUser = async (authtoken) => {
-    return await  axios.post(`${process.env.REACT_APP_API}/create-or-update-user`, {}, {
-        headers: {
-            authtoken: authtoken
-        }
-    });
-};
-
+import {createOrUpdateUser} from '../../functions/auth';
 
 const Login = ({history}) => {
 
@@ -72,7 +63,8 @@ const Login = ({history}) => {
         .then( async (result) => {
             const {user} = result;
             const idTokenResult = await user.getIdTokenResult();
-            //sending token to backend
+            
+            //sending clien token to backend (verification)
             createOrUpdateUser(idTokenResult.token)
             .then((res)=> {
                 dispatch({
