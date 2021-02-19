@@ -8,3 +8,12 @@ export const createOrUpdateUser = async (authtoken) => {
         }
     });
 };
+
+//sending to backend for getting current user info back
+export const currentUser = async (authtoken) => {
+    return await  axios.post(`${process.env.REACT_APP_API}/current-user`, {}, {
+        headers: {
+            authtoken: authtoken
+        }
+    });
+};
