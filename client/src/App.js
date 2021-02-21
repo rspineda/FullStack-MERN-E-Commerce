@@ -9,11 +9,13 @@ import Home from './pages/Home';
 import Header from './components/nav/Header';
 import RegisterComplete from './pages/auth/RegisterComplete';
 import ForgotPassword from './pages/auth/ForgotPassword';
+import History from './pages/user/History';
+import UserRoute from './components/routes/UserRoute';
 
 import {auth} from './firebase';
 import {useDispatch} from 'react-redux';
 import { currentUser } from './functions/auth';
-import { ConsoleSqlOutlined } from "@ant-design/icons";
+
 
 const App = () => {
   
@@ -56,6 +58,7 @@ const App = () => {
       <Route exact path="/register" component={Register}></Route>
       <Route exact path="/register/complete" component={RegisterComplete}></Route>
       <Route exact path="/forgot/password" component={ForgotPassword}></Route>
+      <UserRoute exact path="/user/history" component={History}></UserRoute>
     </Switch>
     </>
     
