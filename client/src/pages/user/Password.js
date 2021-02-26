@@ -8,17 +8,28 @@ const Password = () => {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(password);
+        setLoading(true)
+        //console.log(password);
+        await auth.currentUser.updatePassword(password)
+        .then(()=>{
+            setLoading(false);
+            setPassword(""); //cleaning the state once it's updated
+            toast.success('Password updated')
+        })
+        .catch(err => {
+            setLoading(false);
+            toast.error(err.message);
+        });
     }
 
     const passwordUpdateForm = () => (
         <form onSubmit={handleSubmit}>
             <div className="form-group">
                 <label>Your Password</label>
-                <input type="password" onChange={(e)=>setPassword(e.target.value)} className="form-control" placeholder="Enter new password"></input>
-                <button className="btn btn-primary">Submit</button>
+                <input type="password" onChange={(e)=>setPassword(e.target.value)} className="form-control" placeholder="Enter new password" disabled={loading} value={password}></input>
+                <button className="btn btn-primary" disabled={!password || password.length < 6 || loading}>Submit</button>
             </div>
         </form>
     );
@@ -30,7 +41,7 @@ const Password = () => {
                 <UserNav></UserNav>
             </div>
             <div className="col">
-                <h4>Password Update</h4>
+                {loading ? (<h4 className="text-danger">Loading...</h4>) : (<h4>Password Update</h4>)}
                 {passwordUpdateForm()}
             </div>
         </div>
