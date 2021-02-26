@@ -17,3 +17,12 @@ export const currentUser = async (authtoken) => {
         }
     });
 };
+
+//sending to backend for getting current admin info back
+export const currentAdmin = async (authtoken) => {
+    return await  axios.post(`${process.env.REACT_APP_API}/current-admin`, {}, {
+        headers: {
+            authtoken: authtoken
+        }
+    });
+};
