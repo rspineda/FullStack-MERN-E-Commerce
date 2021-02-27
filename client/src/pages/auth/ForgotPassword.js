@@ -12,7 +12,7 @@ const ForgotPassword = ({history}) => {
     //prevent autenticated user to acces: /forgot/password
     useEffect(()=>{
         if(user && user.token) history.push("/");
-    }, [user]);
+    }, [user, history]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
