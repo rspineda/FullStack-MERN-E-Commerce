@@ -6,12 +6,12 @@ const categorySchema = new mongoose.Schema(
             type: String,
             trim: true, //so spaces are omited.
             required: 'Name is required',
-            minlength: [3,'Too short'],
+            minlength: [2,'Too short'],
             maxlength: [32, 'Too long']
         },
         slug: {
             type: String,
-            unique: true,
+            unique: true, //so there is only one category for each brand
             lowercase: true,
             index: true
         }
