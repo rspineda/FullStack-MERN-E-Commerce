@@ -47,7 +47,7 @@ const CategoryCreate = () => {
                 <AdminNav></AdminNav>
             </div>
             <div className="col">
-                <h4>Create Category </h4>
+                {loading? <h4 className="text-danger">Loading...</h4> : <h4>Create Category </h4>}
                 {categoryForm()}
             </div>
         </div>
