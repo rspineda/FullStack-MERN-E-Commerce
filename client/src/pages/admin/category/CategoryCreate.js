@@ -2,13 +2,23 @@ import React, { useState, useEffect } from 'react';
 import AdminNav from '../../../components/nav/AdminNav';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
-import { createCategory, getCategory, removeCategory } from '../../../functions/category';
+import { createCategory, getCategories, removeCategory } from '../../../functions/category';
 
 const CategoryCreate = () => {
 
     const { user } = useSelector((state) => ({...state}));
     const [name, setName] = useState('');
     const [loading, setLoading] = useState(false);
+    const [categories, setCategories] = useState([]);
+
+    //fetching all categories from database and rendering them on frontend:
+    useEffect(()=>{
+        loadCategories(); 
+    }, []);
+
+    const loadCategories = () => {
+        getCategories().then( (c) => setCategories(c.data));
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -49,6 +59,8 @@ const CategoryCreate = () => {
             <div className="col">
                 {loading? <h4 className="text-danger">Loading...</h4> : <h4>Create Category </h4>}
                 {categoryForm()}
+                <hr></hr>
+                {JSON.stringify(categories)}
             </div>
         </div>
     </div>
