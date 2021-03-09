@@ -41,6 +41,23 @@ const CategoryCreate = () => {
         })
     }
 
+    const handleRemove = async (slug) => {
+
+            //preventing click by mistake
+            if(window.confirm("Do you want to delete the category?")) {
+                setLoading(true)
+                removeCategory(slug, user.token)
+                .then((res) => {
+                    setLoading(false);
+                    toast.success(`"${res.data.name}" was deleted`);
+                })
+                .catch((err) => {
+                    setLoading(false);
+                    if (err.response.status === 400) toast.error(err.response.data);
+                });
+            }
+    }
+
     const categoryForm = () => (
         <form onSubmit={handleSubmit}>
             <div className="form-group">
@@ -65,7 +82,7 @@ const CategoryCreate = () => {
                 {categories.map((c) => (
                     <div className="alert alert-secondary" key={c._id}>
                         {c.name}
-                        <span className="btn btn-sm float-right"><DeleteOutlined className="text-danger"></DeleteOutlined></span>
+                        <span onClick={() => handleRemove(c.slug)} className="btn btn-sm float-right"><DeleteOutlined className="text-danger"></DeleteOutlined></span>
                         <Link to={`/admin/category/${c.slug}`}><span className="btn btn-sm float-right"><EditOutlined className="text-warning"></EditOutlined></span></Link>
                     </div>
                 ))}
