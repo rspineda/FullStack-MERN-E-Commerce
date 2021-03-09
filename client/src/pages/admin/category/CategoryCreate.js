@@ -3,6 +3,8 @@ import AdminNav from '../../../components/nav/AdminNav';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { createCategory, getCategories, removeCategory } from '../../../functions/category';
+import { Link } from 'react-router-dom';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 
 const CategoryCreate = () => {
 
@@ -60,7 +62,13 @@ const CategoryCreate = () => {
                 {loading? <h4 className="text-danger">Loading...</h4> : <h4>Create Category </h4>}
                 {categoryForm()}
                 <hr></hr>
-                {JSON.stringify(categories)}
+                {categories.map((c) => (
+                    <div className="alert alert-secondary" key={c._id}>
+                        {c.name}
+                        <span className="btn btn-sm float-right"><DeleteOutlined className="text-danger"></DeleteOutlined></span>
+                        <Link to={`/admin/category/${c.slug}`}><span className="btn btn-sm float-right"><EditOutlined className="text-warning"></EditOutlined></span></Link>
+                    </div>
+                ))}
             </div>
         </div>
     </div>
