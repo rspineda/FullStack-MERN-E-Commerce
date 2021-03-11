@@ -36,7 +36,7 @@ exports.remove = async (req, res) => {
         const deleted = await Category.findOneAndDelete({slug: req.params.slug});
         res.json({
             "message": "Category deleted successfully",
-            "Category deleted" : deleted
+            "category_deleted" : deleted
         });
     }catch (err) {
         res.status(400).send("Delete category failed");

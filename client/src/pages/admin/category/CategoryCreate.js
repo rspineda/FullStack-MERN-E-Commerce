@@ -19,7 +19,8 @@ const CategoryCreate = () => {
     }, []);
 
     const loadCategories = () => {
-        getCategories().then( (c) => setCategories(c.data));
+        getCategories()
+        .then((c) => setCategories(c.data));
     }
 
     const handleSubmit = (e) => {
@@ -33,6 +34,7 @@ const CategoryCreate = () => {
             setLoading(false);
             setName('');
             toast.success(`"${res.data.name}" was created`);
+            loadCategories(); // fetch again the categories and show them on the page , so it is not neccesary to refresh the page to see the new category added.
         })
         .catch(err => {
             //console.log(err)
@@ -48,8 +50,10 @@ const CategoryCreate = () => {
                 setLoading(true)
                 removeCategory(slug, user.token)
                 .then((res) => {
+                    //console.log(res);
                     setLoading(false);
-                    toast.success(`"${res.data.name}" was deleted`);
+                    toast.success(`"${res.data.category_deleted.name}" was deleted`);
+                    loadCategories(); // fetch again the categories and show them on the page , so it is not neccesary to refresh the page to see the categories without the one deleted.
                 })
                 .catch((err) => {
                     setLoading(false);
