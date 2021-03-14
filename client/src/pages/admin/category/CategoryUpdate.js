@@ -29,6 +29,18 @@ const CategoryUpdate = ({history, match}) => {
         e.preventDefault();
         //console.log(name)
         setLoading(true);
+        updateCategory(match.params.slug, {name: name}, user.token)
+        .then((res)=> {
+            setLoading(false);
+            setName("");
+            toast.success(`"${res.data.name}" was updated`);
+            history.push('/admin/category');
+        })
+        .catch((err)=> {
+            console.log(err);
+            setLoading(false);
+            if(err.response.status === 400) toast.error(err.response.data);
+        });
     }
 
 
