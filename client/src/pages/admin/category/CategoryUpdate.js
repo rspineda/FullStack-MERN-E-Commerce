@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { getCategory, updateCategory } from '../../../functions/category';
 //import { useParams } from 'react-router-dom'; //instead I'm going to use the 'match' prop 
+import CategoryForm from '../../../components/forms/CategoryForm';
 
 const CategoryUpdate = ({history, match}) => {
 
@@ -43,7 +44,8 @@ const CategoryUpdate = ({history, match}) => {
         });
     }
 
-
+/*
+//refactored with the CategoryForm component
     const categoryForm = () => (
         <form onSubmit={handleSubmit}>
             <div className="form-group">
@@ -54,7 +56,7 @@ const CategoryUpdate = ({history, match}) => {
             </div>
         </form>
     );
-
+*/
     return (
         <div className="container-fluid">
         <div className="row">
@@ -63,7 +65,7 @@ const CategoryUpdate = ({history, match}) => {
             </div>
             <div className="col">
                 {loading? <h4 className="text-danger">Loading...</h4> : <h4>Update Category </h4>}
-                {categoryForm()}
+                <CategoryForm handleSubmit={handleSubmit} name={name} setName={setName}></CategoryForm>
                 <hr></hr>
             </div>
         </div>

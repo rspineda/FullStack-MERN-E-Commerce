@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { createCategory, getCategories, removeCategory } from '../../../functions/category';
 import { Link } from 'react-router-dom';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
+import CategoryForm from '../../../components/forms/CategoryForm';
 
 const CategoryCreate = () => {
 
@@ -61,7 +62,8 @@ const CategoryCreate = () => {
                 });
             }
     }
-
+/*
+    //refactored with the CategoryForm component
     const categoryForm = () => (
         <form onSubmit={handleSubmit}>
             <div className="form-group">
@@ -72,7 +74,7 @@ const CategoryCreate = () => {
             </div>
         </form>
     );
-
+*/
     return (
         <div className="container-fluid">
         <div className="row">
@@ -81,7 +83,7 @@ const CategoryCreate = () => {
             </div>
             <div className="col">
                 {loading? <h4 className="text-danger">Loading...</h4> : <h4>Create Category </h4>}
-                {categoryForm()}
+                <CategoryForm handleSubmit={handleSubmit} name={name} setName={setName}></CategoryForm>
                 <hr></hr>
                 {categories.map((c) => (
                     <div className="alert alert-secondary" key={c._id}>
