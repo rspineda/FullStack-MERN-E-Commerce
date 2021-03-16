@@ -14,6 +14,9 @@ const CategoryCreate = () => {
     const [loading, setLoading] = useState(false);
     const [categories, setCategories] = useState([]);
 
+    //filtering 1º
+    const [keyword, setKeyword] = useState("");
+
     //fetching all categories from database and rendering them on frontend:
     useEffect(()=>{
         loadCategories(); 
@@ -75,6 +78,15 @@ const CategoryCreate = () => {
         </form>
     );
 */
+    //filtering 3º
+    const handleSearch = (e) => {
+        e.preventDefault();
+        setKeyword(e.target.value.toLowerCase());
+    }
+
+    //filtering 4º (use it before map categories)
+    const searched = (keyword) => (c) => c.name.toLowerCase().includes(keyword);
+
     return (
         <div className="container-fluid">
         <div className="row">
@@ -84,8 +96,13 @@ const CategoryCreate = () => {
             <div className="col">
                 {loading? <h4 className="text-danger">Loading...</h4> : <h4>Create Category </h4>}
                 <CategoryForm handleSubmit={handleSubmit} name={name} setName={setName}></CategoryForm>
+                
+                {/*filtering 2º*/}
+                <input type="search" placeholder="Filter" value={keyword} onChange={handleSearch} className="form-control mb-4"></input>
+
                 <hr></hr>
-                {categories.map((c) => (
+                {/*//filtering 5º Put searched function before "map"*/}
+                {categories.filter(searched(keyword)).map((c) => (
                     <div className="alert alert-secondary" key={c._id}>
                         {c.name}
                         <span onClick={() => handleRemove(c.slug)} className="btn btn-sm float-right"><DeleteOutlined className="text-danger"></DeleteOutlined></span>
