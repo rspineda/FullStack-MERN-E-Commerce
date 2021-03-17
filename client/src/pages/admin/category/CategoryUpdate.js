@@ -44,19 +44,6 @@ const CategoryUpdate = ({history, match}) => {
         });
     }
 
-/*
-//refactored with the CategoryForm component
-    const categoryForm = () => (
-        <form onSubmit={handleSubmit}>
-            <div className="form-group">
-                <label>Name</label>
-                <input type="text" className="form-control" onChange={(e) => setName(e.target.value)} value={name} autoFocus required></input>
-                <br></br>
-                <button className="btn btn-outline-primary">Save</button>
-            </div>
-        </form>
-    );
-*/
     return (
         <div className="container-fluid">
         <div className="row">

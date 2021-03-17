@@ -6,6 +6,7 @@ import { createCategory, getCategories, removeCategory } from '../../../function
 import { Link } from 'react-router-dom';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import CategoryForm from '../../../components/forms/CategoryForm';
+import LocalSearch from '../../../components/forms/LocalSearch';
 
 const CategoryCreate = () => {
 
@@ -65,25 +66,7 @@ const CategoryCreate = () => {
                 });
             }
     }
-/*
-    //refactored with the CategoryForm component
-    const categoryForm = () => (
-        <form onSubmit={handleSubmit}>
-            <div className="form-group">
-                <label>Name</label>
-                <input type="text" className="form-control" onChange={(e) => setName(e.target.value)} value={name} autoFocus required></input>
-                <br></br>
-                <button className="btn btn-outline-primary">Save</button>
-            </div>
-        </form>
-    );
-*/
-    //filtering 3º
-    const handleSearch = (e) => {
-        e.preventDefault();
-        setKeyword(e.target.value.toLowerCase());
-    }
-
+    
     //filtering 4º (use it before map categories)
     const searched = (keyword) => (c) => c.name.toLowerCase().includes(keyword);
 
@@ -96,11 +79,10 @@ const CategoryCreate = () => {
             <div className="col">
                 {loading? <h4 className="text-danger">Loading...</h4> : <h4>Create Category </h4>}
                 <CategoryForm handleSubmit={handleSubmit} name={name} setName={setName}></CategoryForm>
-                
-                {/*filtering 2º*/}
-                <input type="search" placeholder="Filter" value={keyword} onChange={handleSearch} className="form-control mb-4"></input>
 
-                <hr></hr>
+                {/*Filtering, step 2 and 3, (refactored) */}
+                <LocalSearch keyword={keyword} setKeyword={setKeyword}></LocalSearch>
+
                 {/*//filtering 5º Put searched function before "map"*/}
                 {categories.filter(searched(keyword)).map((c) => (
                     <div className="alert alert-secondary" key={c._id}>
