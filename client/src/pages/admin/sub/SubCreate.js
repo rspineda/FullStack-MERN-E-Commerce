@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import AdminNav from '../../../components/nav/AdminNav';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
-import { createCategory, getCategories, removeCategory } from '../../../functions/category';
+import { getCategories } from '../../../functions/category';
 import { createSub, getSubs, removeSub } from '../../../functions/sub';
 import { Link } from 'react-router-dom';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
@@ -94,7 +94,7 @@ const SubCreate = () => {
                 <div className="form-group">
                     <label>Parent Category</label>
                     <select name="category" className="form-control" onChange={(e) => setCategory(e.target.value)}>
-                        <option disabled>Please Select</option>
+                        <option>Please Select</option>
                         {categories.length > 0 && categories.map((c) => (<option key={c._id} value={c._id}>{c.name}</option>))}
                         
                     </select>
