@@ -15,6 +15,7 @@ const SubCreate = () => {
     const [name, setName] = useState('');
     const [loading, setLoading] = useState(false);
     const [categories, setCategories] = useState([]);
+    const [subs, setSubs] = useState([]);
     const [category, setCategory] = useState(''); //Parent Category selected by the user
 
     //filtering 1º
@@ -22,12 +23,20 @@ const SubCreate = () => {
 
     //fetching all categories from database and rendering them on frontend:
     useEffect(()=>{
-        loadCategories(); 
+        loadCategories();
+        loadSubs(); 
     }, []);
 
+    //categories
     const loadCategories = () => {
         getCategories()
         .then((c) => setCategories(c.data));
+    }
+
+    //subcategories
+    const loadSubs = () => {
+        getSubs()
+        .then((s) => setSubs(s.data));
     }
 
     const handleSubmit = (e) => {
@@ -41,6 +50,7 @@ const SubCreate = () => {
             setLoading(false);
             setName('');
             toast.success(`"${res.data.name}" was created`);
+            loadSubs(); // fetch again the subcategories and show them on the page , so it is not neccesary to refresh the page to see the new subcategories added.
                    
         })
         .catch(err => {
@@ -53,14 +63,14 @@ const SubCreate = () => {
     const handleRemove = async (slug) => {
 
             //preventing click by mistake
-            if(window.confirm("Do you want to delete the category?")) {
+            if(window.confirm("Do you want to delete the Subcategory?")) {
                 setLoading(true)
                 removeSub(slug, user.token)
                 .then((res) => {
                     //console.log(res);
                     setLoading(false);
-                    toast.success(`"${res.data.category_deleted.name}" was deleted`);
-                     
+                    toast.success(`"${res.data.subcategory_deleted.name}" was deleted`);
+                    loadSubs(); // fetch again the subcategories and show them on the page , so it is not neccesary to refresh the page to see the subcategories without the one deleted. 
                 })
                 .catch((err) => {
                     setLoading(false);
@@ -90,10 +100,11 @@ const SubCreate = () => {
                     </select>
                 </div>
 
+                {/* 
                 <div>
                     Category Id : {JSON.stringify(category)}
                 </div>
-                
+                */}
 
                 <CategoryForm handleSubmit={handleSubmit} name={name} setName={setName}></CategoryForm>
 
@@ -103,13 +114,13 @@ const SubCreate = () => {
 
                 
                 {/*//filtering 5º Put searched function before "map"*/}
-               {/* {categories.filter(searched(keyword)).map((c) => (
-                    <div className="alert alert-secondary" key={c._id}>
-                        {c.name}
-                        <span onClick={() => handleRemove(c.slug)} className="btn btn-sm float-right"><DeleteOutlined className="text-danger"></DeleteOutlined></span>
-                        <Link to={`/admin/category/${c.slug}`}><span className="btn btn-sm float-right"><EditOutlined className="text-warning"></EditOutlined></span></Link>
+                {subs.filter(searched(keyword)).map((s) => (
+                    <div className="alert alert-secondary" key={s._id}>
+                        {s.name}
+                        <span onClick={() => handleRemove(s.slug)} className="btn btn-sm float-right"><DeleteOutlined className="text-danger"></DeleteOutlined></span>
+                        <Link to={`/admin/sub/${s.slug}`}><span className="btn btn-sm float-right"><EditOutlined className="text-warning"></EditOutlined></span></Link>
                     </div>
-               ))} */}
+                ))} 
                 
             </div>
         </div>
