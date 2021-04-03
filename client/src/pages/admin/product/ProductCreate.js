@@ -24,16 +24,27 @@ const ProductCreate = () => {
 
     const [values, setValues] = useState(initialState);
 
+    const { user } = useSelector((state) => ({ ...state}));
+
     //destructuring so later i dont have to use--> values.title .....
     const { title, description, price, categories, category, subs, shipping, quantity, images, colors, color, brands, brand } = values;
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        //
+        createProduct(values, user.token)
+        .then(res => {
+            console.log(res);
+        })
+        .catch(err => {
+            console.log(err);
+            if (err.response.status === 400) toast.error(err.response.data);
+        })
+        
     }
 
-    const handleChange = () => {
-        //
+    const handleChange = (e) => {
+        setValues({...values, [e.target.name]: e.target.value});
+        //console.log(e.target.name, "-----", e.target.value);
     }
 
     return (
