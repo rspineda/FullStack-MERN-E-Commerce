@@ -34,6 +34,8 @@ const ProductCreate = () => {
         createProduct(values, user.token)
         .then(res => {
             console.log(res);
+            window.alert(`"${res.data.title}" was created`);
+            window.location.reload(); //once the iser click ok on the previous alert, the page'll reload and the form fields will be clear again.
         })
         .catch(err => {
             console.log(err);
