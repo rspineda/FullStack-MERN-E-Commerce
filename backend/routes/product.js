@@ -9,9 +9,9 @@ const { create, read, update, remove, list } = require('../controllers/product')
 
 //routes
 router.post('/product', authCheck, adminCheck, create);
-
+router.get('/products', list);
 //similar to categories:
-//router.get('/categories', list);
+//
 //router.get('/category/:slug', read);
 //router.put('/category/:slug', authCheck, adminCheck, update);
 //router.delete('/category/:slug', authCheck, adminCheck, remove);

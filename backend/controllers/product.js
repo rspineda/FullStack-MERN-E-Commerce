@@ -15,3 +15,8 @@ exports.create = async (req, res ) => {
         });
     }
 };
+
+exports.list = async (req, res) => {
+    let list = await Product.find({}).sort({createdAt:-1}).exec();
+    res.json(list);
+};
