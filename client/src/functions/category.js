@@ -34,3 +34,8 @@ export const createCategory= async (category, authtoken) => {
         }
     });
 };
+
+//get the subcategories attached to a specific parent category.
+export const getCategorySubs = async (_id) => {
+    return await  axios.get(`${process.env.REACT_APP_API}/category/subs/${_id}`);
+};

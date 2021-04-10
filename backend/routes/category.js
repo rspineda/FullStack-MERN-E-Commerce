@@ -13,6 +13,6 @@ router.get('/categories', list);
 router.get('/category/:slug', read);
 router.put('/category/:slug', authCheck, adminCheck, update);
 router.delete('/category/:slug', authCheck, adminCheck, remove);
-router.get('/category/subs/:id', getSubs); //it will return the subcategories attached to a specific parent category.
+router.get('/category/subs/:_id', getSubs); //it will return the subcategories attached to a specific parent category.
 
 module.exports = router;

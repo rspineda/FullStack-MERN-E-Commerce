@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { createProduct } from '../../../functions/product';
 import ProductCreateForm from '../../../components/forms/ProductCreateForm';
-import {  getCategories } from '../../../functions/category';
+import { getCategories, getCategorySubs } from '../../../functions/category';
 
 const initialState = {
     title: '',
@@ -25,6 +25,7 @@ const initialState = {
 const ProductCreate = () => {
 
     const [values, setValues] = useState(initialState);
+    const [subOptions, setSubOptions] = useState([]);
 
     const { user } = useSelector((state) => ({ ...state}));
 
@@ -59,6 +60,18 @@ const ProductCreate = () => {
         //console.log(e.target.name, "-----", e.target.value);
     }
 
+    //When the user selects a category, the subcategories attached to that parent category will be fetch.
+    const handleCategoryChange = (e) => {
+        e.preventDefault();
+        console.log('category clicked: ', e.target.value);
+        setValues({...values, category: e.target.value});
+        getCategorySubs(e.target.value)
+        .then((res) => {
+            console.log('subcategories attached to the category selected: ', res);
+            setSubOptions(res.data);
+        })
+    }
+
     return (
         <div className="container-fluid">
             <div className="row">
@@ -68,7 +81,7 @@ const ProductCreate = () => {
                 <div className="col-md-10">
                     <h4>Create Product</h4>
                     <hr></hr>
-                    <ProductCreateForm handleSubmit={handleSubmit} handleChange={handleChange} values={values}></ProductCreateForm>
+                    <ProductCreateForm handleSubmit={handleSubmit} handleChange={handleChange} values={values} handleCategoryChange={handleCategoryChange}></ProductCreateForm>
                 </div>
             </div>
         </div>

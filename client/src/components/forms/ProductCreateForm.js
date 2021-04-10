@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ProductCreateForm = ({handleSubmit, handleChange, values}) => {
+const ProductCreateForm = ({handleSubmit, handleChange, values, handleCategoryChange }) => {
     
     //destructuring so later i dont have to use--> values.title .....
     const { 
@@ -64,7 +64,7 @@ const ProductCreateForm = ({handleSubmit, handleChange, values}) => {
 
         <div className="form-group">
             <label>Category</label>
-            <select name="category" className="form-control" onChange={handleChange}>
+            <select name="category" className="form-control" onChange={handleCategoryChange}>
                 <option>Please Select</option>
                 {categories.length > 0 && categories.map((c) => (<option key={c._id} value={c._id}>{c.name}</option>))}
                 
