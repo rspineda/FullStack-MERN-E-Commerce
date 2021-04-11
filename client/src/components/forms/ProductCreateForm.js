@@ -82,9 +82,10 @@ const ProductCreateForm = ({
             </select>
         </div>
 
-        <div>
-            <label>Subcategories</label>
-            <Select
+        { showSub && 
+            <div>
+                <label>Subcategories</label>
+                <Select
                 mode="multiple"
                 style={{width: '100%'}}
                 placeholder="Please select"
@@ -94,8 +95,9 @@ const ProductCreateForm = ({
                 {subOptions.length && subOptions.map((s) => (
                     <Option key={s._id} value={s._id}>{s.name}</Option>
                 ))}
-            </Select>
-        </div>
+                </Select>
+            </div>
+        }
         <br></br>
 
         <button className="btn btn-outline-info">Save</button>

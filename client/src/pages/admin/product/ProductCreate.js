@@ -68,9 +68,10 @@ const ProductCreate = () => {
         setValues({...values, category: e.target.value});
         getCategorySubs(e.target.value)
         .then((res) => {
-            console.log('subcategories attached to the category selected: ', res);
+            //console.log('subcategories attached to the category selected: ', res);
             setSubOptions(res.data);
-        })
+        });
+        setShowSub(true); //make visible the subcategories attached to the category selected
     }
 
     return (
