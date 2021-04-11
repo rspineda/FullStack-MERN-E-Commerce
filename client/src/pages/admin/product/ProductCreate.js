@@ -25,7 +25,8 @@ const initialState = {
 const ProductCreate = () => {
 
     const [values, setValues] = useState(initialState);
-    const [subOptions, setSubOptions] = useState([]);
+    const [subOptions, setSubOptions] = useState([]); //subcategories once the parent category is selected
+    const [showSub, setShowSub] = useState(false); //subcategories not visible until parent category is selected
 
     const { user } = useSelector((state) => ({ ...state}));
 
@@ -81,7 +82,19 @@ const ProductCreate = () => {
                 <div className="col-md-10">
                     <h4>Create Product</h4>
                     <hr></hr>
-                    <ProductCreateForm handleSubmit={handleSubmit} handleChange={handleChange} values={values} handleCategoryChange={handleCategoryChange}></ProductCreateForm>
+
+                    {JSON.stringify(values.subs)}
+
+                    <ProductCreateForm 
+                        handleSubmit={handleSubmit} 
+                        handleChange={handleChange} 
+                        values={values} 
+                        setValues={setValues}
+                        handleCategoryChange={handleCategoryChange}
+                        subOptions={subOptions}
+                        showSub={showSub}
+                    >
+                    </ProductCreateForm>
                 </div>
             </div>
         </div>
