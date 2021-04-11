@@ -91,10 +91,12 @@ const ProductCreateForm = ({
                 value={subs}
                 onChange={(value) => setValues({ ...values, subs: value})}
             >
-                <Option value="one">Option one</Option>
-                <Option value="two">Option two</Option>
+                {subOptions.length && subOptions.map((s) => (
+                    <Option key={s._id} value={s._id}>{s.name}</Option>
+                ))}
             </Select>
         </div>
+        <br></br>
 
         <button className="btn btn-outline-info">Save</button>
     </form>
