@@ -28,6 +28,7 @@ const ProductCreate = () => {
     const [values, setValues] = useState(initialState);
     const [subOptions, setSubOptions] = useState([]); //subcategories once the parent category is selected
     const [showSub, setShowSub] = useState(false); //subcategories not visible until parent category is selected
+    const [loading, setLoading] = useSate(false);
 
     const { user } = useSelector((state) => ({ ...state}));
 
@@ -86,7 +87,11 @@ const ProductCreate = () => {
                     <hr></hr>
 
                     <div className="p-3">
-                        <FileUpload></FileUpload>
+                        <FileUpload 
+                            values={values} 
+                            setValues={setValues}
+                            setLoading={setLoading}
+                        ></FileUpload>
                     </div>
 
                     <ProductCreateForm 
