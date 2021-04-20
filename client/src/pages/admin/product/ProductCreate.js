@@ -28,7 +28,7 @@ const ProductCreate = () => {
     const [values, setValues] = useState(initialState);
     const [subOptions, setSubOptions] = useState([]); //subcategories once the parent category is selected
     const [showSub, setShowSub] = useState(false); //subcategories not visible until parent category is selected
-    const [loading, setLoading] = useSate(false);
+    const [loading, setLoading] = useState(false);
 
     const { user } = useSelector((state) => ({ ...state}));
 
@@ -85,6 +85,8 @@ const ProductCreate = () => {
                 <div className="col-md-10">
                     <h4>Create Product</h4>
                     <hr></hr>
+
+                    {JSON.stringify(values.images)}
 
                     <div className="p-3">
                         <FileUpload 

@@ -2,6 +2,7 @@ import React from 'react';
 import Resizer from 'react-image-file-resizer';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import {Avatar} from 'antd';
 
 const FileUpload = ({ values, setValues, setLoading }) => {
     const { user } = useSelector((state) => ({...state}));
@@ -22,17 +23,20 @@ const FileUpload = ({ values, setValues, setLoading }) => {
                         {image: uri}, 
                         {
                             headers: {
-                                authoken: user ? user.token : ""
+                                authtoken: user ? user.token : ""
                             }
                         }
                     )
                     .then(res => {
-                        console.log('Image Upload res data', res);
+                        console.log('Image Upload response data:', res);
                         setLoading(false);
                         allUploadedFiles.push(res.data);
                         setValues({...values, images: allUploadedFiles });
                     })
-                    .catch()
+                    .catch(err => {
+                        setLoading(false);
+                        console.log(`Cloudinary error: ${err}`)
+                    }) 
                 }, 'base64');
             }
         }
@@ -41,19 +45,27 @@ const FileUpload = ({ values, setValues, setLoading }) => {
     };
 
     return (
-        <div className="row">
-            <label className="btn btn-primary btn-raised">
-                Choose File
-                <input 
-                    type="file" 
-                    multiple
-                    hidden 
-                    accept="images/*" 
-                    onChange={fileUploadAndResize}
-                    >
-                </input>
-            </label>
-        </div>
+        <>
+            <div className="row">
+                {values.images && values.images.map((image) => (
+                    <Avatar key={image.public_id} src={image.url} size={100} className="m-3"></Avatar>
+                ))}
+            </div>
+
+            <div className="row">
+                <label className="btn btn-primary btn-raised">
+                    Choose File
+                    <input 
+                        type="file" 
+                        multiple
+                        hidden 
+                        accept="images/*" 
+                        onChange={fileUploadAndResize}
+                        >
+                    </input>
+                </label>
+            </div>
+        </>
     );
 }
 
