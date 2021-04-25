@@ -51,7 +51,7 @@ const FileUpload = ({ values, setValues, setLoading }) => {
             `${process.env.REACT_APP_API}/removeimage`,
             {public_id: id},
             {
-                header: {
+                headers: {
                     authtoken: user ? user.token : "",
                 }
             }
@@ -67,6 +67,8 @@ const FileUpload = ({ values, setValues, setLoading }) => {
         })
         .catch((err) => {
             console.log(err);
+            setLoading(false);
+
         })
     };
 
