@@ -2,7 +2,7 @@ import React from 'react';
 import Resizer from 'react-image-file-resizer';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import {Avatar} from 'antd';
+import {Avatar, Badge} from 'antd';
 
 const FileUpload = ({ values, setValues, setLoading }) => {
     const { user } = useSelector((state) => ({...state}));
@@ -44,11 +44,49 @@ const FileUpload = ({ values, setValues, setLoading }) => {
         //set url to images[] in the parent component - ProductCreate
     };
 
+    const handleImageRemove = (id) => {
+        setLoading(true);
+        //console.log("image to remove", id);
+        axios.post(
+            `${process.env.REACT_APP_API}/removeimage`,
+            {public_id: id},
+            {
+                header: {
+                    authtoken: user ? user.token : "",
+                }
+            }
+        )
+        .then((res) => {
+            setLoading(false);
+            //removing image deleted from state:
+            const {images} = values;
+            let filteredImages = images.filter((item) => {
+                return item.public_id !== id; 
+            });
+            setValues({ ...values, images: filteredImages});
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    };
+
     return (
         <>
             <div className="row">
                 {values.images && values.images.map((image) => (
-                    <Avatar key={image.public_id} src={image.url} size={100} className="m-3"></Avatar>
+                    <Badge 
+                        count="x" 
+                        key={image.public_id} 
+                        onClick={() => handleImageRemove(image.public_id)}
+                        style={{ cursor: "pointer" }}
+                    >
+                        <Avatar 
+                        src={image.url} 
+                        size={100}
+                        shape="square" 
+                        className="ml-3"
+                        ></Avatar>
+                    </Badge>      
                 ))}
             </div>
 
