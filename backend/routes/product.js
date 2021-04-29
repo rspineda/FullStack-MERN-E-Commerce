@@ -5,11 +5,11 @@ const router = express.Router();
 const { authCheck, adminCheck } = require('../middlewares/auth');
 
 //controller
-const { create, read, update, remove, list } = require('../controllers/product');
+const { create, read, update, remove, listAll } = require('../controllers/product');
 
 //routes
 router.post('/product', authCheck, adminCheck, create);
-router.get('/products', list);
+router.get('/products/:count', listAll);
 //similar to categories:
 //
 //router.get('/category/:slug', read);

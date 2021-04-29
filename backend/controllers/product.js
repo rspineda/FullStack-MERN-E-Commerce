@@ -16,7 +16,12 @@ exports.create = async (req, res ) => {
     }
 };
 
-exports.list = async (req, res) => {
-    let list = await Product.find({}).sort({createdAt:-1}).exec();
+exports.listAll = async (req, res) => {
+    let list = await Product.find({})
+    .limit(parseInt(req.params.count)) //limit the number of products that are got from backend
+    .populate("category")
+    .populate("subs")
+    .sort([["createdAt", "desc"]])
+    .exec();
     res.json(list);
 };
