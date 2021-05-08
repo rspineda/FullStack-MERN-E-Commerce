@@ -1,5 +1,6 @@
 import React from 'react';
 import {Card} from 'antd';
+import laptopImage from '../../images/laptop.jpg';
 
 const {Meta} = Card;
 
@@ -10,7 +11,7 @@ const AdminProductCard = ({product}) => {
     return  (<Card 
                 cover={
                     <img 
-                        src={images && images.length ? images[0].url : ''} 
+                        src={images && images.length ? images[0].url : laptopImage} 
                         style={{height:'150px', objectFit:'cover'}}
                         className='p-1'
                     />}
