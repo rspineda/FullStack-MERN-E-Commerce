@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import AdminNav from '../../../components/nav/AdminNav';
-import { getProductsByCount } from '../../../functions/product';
+import { getProductsByCount, removeProduct } from '../../../functions/product';
 import AdminProductCard from '../../../components/cards/AdminProductCard';
 
 const AllProducts = () => {
@@ -25,6 +25,14 @@ const AllProducts = () => {
         });
     }
 
+    //remove product
+    const handleRemove = (slug) => {
+        let answer = window.confirm('Do you want to delete it?');
+        if(answer) {
+            console.log('send delete request', slug);
+        } 
+    }
+
     return (
         <div className="container-fluid">
         <div className="row">
@@ -36,7 +44,10 @@ const AllProducts = () => {
                 <div className='row'>
                     {products.map((product)=> (
                     <div key={product._id} className='col-md-4 pb-3'>
-                        <AdminProductCard product={product}/>
+                        <AdminProductCard 
+                            product={product} 
+                            handleRemove={handleRemove}
+                        />
                     </div>
                     ))}
                 </div>
