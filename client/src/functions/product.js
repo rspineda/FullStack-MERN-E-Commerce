@@ -14,7 +14,7 @@ export const getProductsByCount = async (count) => {
 
 export const removeProduct = async (slug, authtoken) => {
     return await axios.delete(`${process.env.REACT_APP_API}/product/${slug}`, {
-        header: {
+        headers: {
             authtoken: authtoken
         }
     })

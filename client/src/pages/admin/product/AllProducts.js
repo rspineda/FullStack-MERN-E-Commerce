@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react';
 import AdminNav from '../../../components/nav/AdminNav';
 import { getProductsByCount, removeProduct } from '../../../functions/product';
 import AdminProductCard from '../../../components/cards/AdminProductCard';
+import {useSelector} from 'react-redux';
+import { toast } from 'react-toastify';
 
 const AllProducts = () => {
 
+    const { user } = useSelector((state) => ({...state}));
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -30,6 +33,17 @@ const AllProducts = () => {
         let answer = window.confirm('Do you want to delete it?');
         if(answer) {
             console.log('send delete request', slug);
+            removeProduct(slug, user.token)
+            .then((res) => {
+                //console.log(res.data);
+                //console.log(res.data.product_deleted);
+                loadAllProducts();
+                toast.success(`"${res.data.product_deleted.title}" was deleted`);
+            })
+            .catch((err) => {
+                console.log(err);
+                if(err.response.status === 400) toast.error(err.response.data);
+            });
         } 
     }
 
