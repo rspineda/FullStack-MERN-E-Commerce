@@ -2,17 +2,50 @@ import React, { useState, useEffect } from 'react';
 import AdminNav from '../../../components/nav/AdminNav';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
-import { createProduct } from '../../../functions/product';
-import ProductCreateForm from '../../../components/forms/ProductCreateForm';
+import {getProduct} from '../../../functions/product';
 import { getCategories, getCategorySubs } from '../../../functions/category';
 import FileUpload from '../../../components/forms/FileUpload';
 import {LoadingOutlined} from '@ant-design/icons';
 
 
-const ProductUpdate = () => {
+const initialState = {
+  title: '',
+  description: '',
+  price: '',
+  categories: [],
+  category: '',
+  subs: [],
+  shipping: '',
+  quantity: '',
+  images: [],
+  colors: ["Black", "Brown", "Silver", "White", "Blue"],
+  brands: ["Apple", "Samsung", "Microsoft", "Dell", "Asus", "Acer", "Lenovo", "Toshiba", "hp"],
+  color: '',
+  brand: ''
+};
 
-    const { user } = useSelector((state) => ({ ...state}));
+const ProductUpdate = ({match}) => {
+
+    const {user} = useSelector((state) => ({ ...state}));
+    const {slug} = match.params;
+    const [values, setValues] = useState(initialState);
+
+    useEffect(() => {
+        loadProduct();
+    }, []);
     
+    const loadProduct = () => {
+        getProduct(slug)
+        .then((p) => {
+            //console.log(p);
+            setValues({...values, ...p.data})
+        })
+        .catch((e) => {
+            console.log(e);
+        })
+    };
+
+
     return (
         <div className="container-fluid">
             <div className="row">
@@ -21,6 +54,7 @@ const ProductUpdate = () => {
                 </div>
                 <div className="col-md-10">
                     <h4>Update Product</h4>
+                    {JSON.stringify(values)}
                 </div>
             </div>
         </div>
