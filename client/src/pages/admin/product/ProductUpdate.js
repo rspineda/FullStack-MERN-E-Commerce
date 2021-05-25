@@ -6,6 +6,7 @@ import {getProduct} from '../../../functions/product';
 import { getCategories, getCategorySubs } from '../../../functions/category';
 import FileUpload from '../../../components/forms/FileUpload';
 import {LoadingOutlined} from '@ant-design/icons';
+import ProductUpdateForm from '../../../components/forms/ProductUpdateForm';
 
 
 const initialState = {
@@ -45,6 +46,15 @@ const ProductUpdate = ({match}) => {
         })
     };
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+    }
+
+    const handleChange = (e) => {
+        setValues({...values, [e.target.name]: e.target.value});
+        //console.log(e.target.name, "-----", e.target.value);
+    }
+
 
     return (
         <div className="container-fluid">
@@ -54,7 +64,13 @@ const ProductUpdate = ({match}) => {
                 </div>
                 <div className="col-md-10">
                     <h4>Update Product</h4>
-                    {JSON.stringify(values)}
+                    {/* {JSON.stringify(values)} */}
+                    <ProductUpdateForm
+                      handleSubmit={handleSubmit} 
+                      handleChange={handleChange}
+                      values={values} 
+                      setValues={setValues}
+                    />
                 </div>
             </div>
         </div>
