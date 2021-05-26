@@ -13,7 +13,6 @@ const initialState = {
   title: '',
   description: '',
   price: '',
-  categories: [],
   category: '',
   subs: [],
   shipping: '',
@@ -30,9 +29,13 @@ const ProductUpdate = ({match}) => {
     const {user} = useSelector((state) => ({ ...state}));
     const {slug} = match.params;
     const [values, setValues] = useState(initialState);
+    const [categories, setCategories] = useState([]);
+    const [subOptions, setSubOptions] = useState([]); //subcategories once the parent category is selected
+
 
     useEffect(() => {
         loadProduct();
+        loadCategories();
     }, []);
     
     const loadProduct = () => {
@@ -46,6 +49,11 @@ const ProductUpdate = ({match}) => {
         })
     };
 
+    const loadCategories = () => {
+        getCategories()
+        .then((c) => setCategories(c.data));
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
     }
@@ -53,6 +61,19 @@ const ProductUpdate = ({match}) => {
     const handleChange = (e) => {
         setValues({...values, [e.target.name]: e.target.value});
         //console.log(e.target.name, "-----", e.target.value);
+    }
+
+    //When the user selects a category, the subcategories attached to that parent category will be fetch.
+    const handleCategoryChange = (e) => {
+        e.preventDefault();
+        console.log('category clicked: ', e.target.value);
+        setValues({...values, subs:[] ,category: e.target.value});
+        getCategorySubs(e.target.value)
+        .then((res) => {
+            //console.log('subcategories attached to the category selected: ', res);
+            setSubOptions(res.data);
+        });
+        //setShowSub(true); //make visible the subcategories attached to the category selected
     }
 
 
@@ -70,6 +91,9 @@ const ProductUpdate = ({match}) => {
                       handleChange={handleChange}
                       values={values} 
                       setValues={setValues}
+                      categories={categories}
+                      handleCategoryChange={handleCategoryChange}
+                      subOptions={subOptions}
                     />
                 </div>
             </div>

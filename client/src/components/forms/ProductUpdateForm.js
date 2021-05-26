@@ -7,7 +7,10 @@ const ProductUpdateForm = ({
     handleSubmit, 
     handleChange, 
     values,
-    setValues, 
+    setValues,
+    handleCategoryChange ,
+    categories,
+    subOptions
 }) => {
     
     //destructuring so later i dont have to use--> values.title .....
@@ -15,7 +18,6 @@ const ProductUpdateForm = ({
         title, 
         description, 
         price, 
-        categories, 
         category, 
         subs, 
         shipping, 
@@ -64,6 +66,14 @@ const ProductUpdateForm = ({
             <label>Brand</label>
             <select value={brand} name="brand" className="form-control" onChange={handleChange}>
                 {brands.map((b)=> (<option key={b} value={b}>{b}</option>))}
+            </select>
+        </div>
+        <div className="form-group">
+            <label>Category</label>
+            <select name="category" className="form-control" onChange={handleCategoryChange}>
+                <option>Please Select</option>
+                {categories.length > 0 && categories.map((c) => (<option key={c._id} value={c._id}>{c.name}</option>))}
+                
             </select>
         </div>
 
