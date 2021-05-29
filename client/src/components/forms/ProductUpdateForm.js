@@ -10,7 +10,9 @@ const ProductUpdateForm = ({
     setValues,
     handleCategoryChange ,
     categories,
-    subOptions
+    subOptions,
+    arrayOfSubIds,
+    setArrayOfSubIds
 }) => {
     
     //destructuring so later i dont have to use--> values.title .....
@@ -71,11 +73,25 @@ const ProductUpdateForm = ({
         <div className="form-group">
             <label>Category</label>
             <select name="category" className="form-control" onChange={handleCategoryChange}>
-                <option>Please Select</option>
+                <option>{category ? category.name : "Please select"}</option>
                 {categories.length > 0 && categories.map((c) => (<option key={c._id} value={c._id}>{c.name}</option>))}
                 
             </select>
         </div>
+        <div>
+                <label>Subcategories</label>
+                <Select
+                mode="multiple"
+                style={{width: '100%'}}
+                placeholder="Please select"
+                value={arrayOfSubIds}
+                onChange={(value) => setArrayOfSubIds(value)}
+            >
+                {subOptions.length && subOptions.map((s) => (
+                    <Option key={s._id} value={s._id}>{s.name}</Option>
+                ))}
+                </Select>
+            </div>
 
         <br></br>
 

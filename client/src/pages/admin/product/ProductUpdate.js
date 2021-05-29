@@ -31,7 +31,7 @@ const ProductUpdate = ({match}) => {
     const [values, setValues] = useState(initialState);
     const [categories, setCategories] = useState([]);
     const [subOptions, setSubOptions] = useState([]); //subcategories once the parent category is selected
-
+    const [arrayOfSubIds, setArrayOfSubIds] = useState([]);
 
     useEffect(() => {
         loadProduct();
@@ -39,10 +39,20 @@ const ProductUpdate = ({match}) => {
     }, []);
     
     const loadProduct = () => {
+        //1st. Loading the product
         getProduct(slug)
         .then((p) => {
             //console.log(p);
-            setValues({...values, ...p.data})
+            setValues({...values, ...p.data});
+            //2nd. Loading the subs that belong to that product.
+            getCategorySubs(p.data.category._id)
+            .then((res) => {
+                setSubOptions(res.data); //Showing the subcategories when the user runs the page for the 1st time
+            });
+            //3rd. Preparing array of Ids, so it can be used on Select MUI component.
+            let array = [];
+            p.data.subs.map((s) => array.push(s._id));
+            setArrayOfSubIds((prev) => array); //refreshed the previous values in the array with the new ones.
         })
         .catch((e) => {
             console.log(e);
@@ -94,6 +104,8 @@ const ProductUpdate = ({match}) => {
                       categories={categories}
                       handleCategoryChange={handleCategoryChange}
                       subOptions={subOptions}
+                      arrayOfSubIds={arrayOfSubIds}
+                      setArrayOfSubIds={setArrayOfSubIds}
                     />
                 </div>
             </div>
