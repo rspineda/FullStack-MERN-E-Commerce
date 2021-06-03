@@ -83,7 +83,11 @@ const ProductUpdate = ({match}) => {
             //console.log('subcategories attached to the category selected: ', res);
             setSubOptions(res.data);
         });
-        //setShowSub(true); //make visible the subcategories attached to the category selected
+        //if user clicks different category and then clicks back to the original category:
+        if(values.category._id === e.target.value){
+            loadProduct();
+        }
+        setArrayOfSubIds([]); //cleaned the previus tags selected.
     }
 
 
