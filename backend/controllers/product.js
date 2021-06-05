@@ -46,3 +46,13 @@ exports.read = async (req, res) => {
       .exec();
     res.json(product);
 };
+
+exports.put = async (req, res) => {
+    try{
+        const updated = await (await Product.findOneAndUpdate({slug: req.params.slug}, req.body, {new: true})).exec();
+        res.json(updated)
+    }catch(err){
+        console.log(`error on Udpdate Product: ${err}`);
+        return res.status(400).send('Update product failed');
+    }
+}
