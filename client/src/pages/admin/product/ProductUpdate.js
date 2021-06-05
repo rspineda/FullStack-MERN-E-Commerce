@@ -33,6 +33,7 @@ const ProductUpdate = ({match}) => {
     const [subOptions, setSubOptions] = useState([]); //subcategories once the parent category is selected
     const [arrayOfSubIds, setArrayOfSubIds] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(''); //to check if the category selected is the same that came from database
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         loadProduct();
@@ -100,8 +101,18 @@ const ProductUpdate = ({match}) => {
                     <AdminNav></AdminNav>
                 </div>
                 <div className="col-md-10">
-                    <h4>Update Product</h4>
-                    {JSON.stringify(values)}
+                    {loading ? <LoadingOutlined className="text-danger h1"></LoadingOutlined> : (<h4>Create Update</h4>)}
+                    <hr></hr>
+                    {/* {JSON.stringify(values)} */}
+
+                    <div className="p-3">
+                        <FileUpload 
+                            values={values} 
+                            setValues={setValues}
+                            setLoading={setLoading}
+                        ></FileUpload>
+                    </div>
+
                     <ProductUpdateForm
                       handleSubmit={handleSubmit} 
                       handleChange={handleChange}
