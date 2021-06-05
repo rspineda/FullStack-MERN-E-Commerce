@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import AdminNav from '../../../components/nav/AdminNav';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
-import {getProduct} from '../../../functions/product';
+import {getProduct, updateProduct} from '../../../functions/product';
 import { getCategories, getCategorySubs } from '../../../functions/category';
 import FileUpload from '../../../components/forms/FileUpload';
 import {LoadingOutlined} from '@ant-design/icons';
@@ -68,6 +68,8 @@ const ProductUpdate = ({match}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setLoading(true);
+
     }
 
     const handleChange = (e) => {
