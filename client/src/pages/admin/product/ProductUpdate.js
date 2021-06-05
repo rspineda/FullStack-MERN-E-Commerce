@@ -32,6 +32,7 @@ const ProductUpdate = ({match}) => {
     const [categories, setCategories] = useState([]);
     const [subOptions, setSubOptions] = useState([]); //subcategories once the parent category is selected
     const [arrayOfSubIds, setArrayOfSubIds] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState(''); //to check if the category selected is the same that came from database
 
     useEffect(() => {
         loadProduct();
@@ -77,7 +78,8 @@ const ProductUpdate = ({match}) => {
     const handleCategoryChange = (e) => {
         e.preventDefault();
         console.log('category clicked: ', e.target.value);
-        setValues({...values, subs:[] ,category: e.target.value});
+        setValues({...values, subs:[] });
+        setSelectedCategory(e.target.value);
         getCategorySubs(e.target.value)
         .then((res) => {
             //console.log('subcategories attached to the category selected: ', res);
@@ -110,6 +112,7 @@ const ProductUpdate = ({match}) => {
                       subOptions={subOptions}
                       arrayOfSubIds={arrayOfSubIds}
                       setArrayOfSubIds={setArrayOfSubIds}
+                      selectedCategory={selectedCategory}
                     />
                 </div>
             </div>
