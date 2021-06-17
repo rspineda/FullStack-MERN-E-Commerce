@@ -90,7 +90,7 @@ const ProductUpdateForm = ({
                 placeholder="Please select"
                 value={arrayOfSubIds}
                 onChange={(value) => setArrayOfSubIds(value)}
-            >
+                >
                 {subOptions.length && subOptions.map((s) => (
                     <Option key={s._id} value={s._id}>{s.name}</Option>
                 ))}
