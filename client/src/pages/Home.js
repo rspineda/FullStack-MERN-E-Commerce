@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { getProductsByCount } from '../functions/product';
 import ProductCard from "../components/cards/ProductCard";
+import Jumbotron from "../components/cards/Jumbotron";
 
 const Home = () => {
   
@@ -22,8 +23,9 @@ const Home = () => {
 
   return (
     <>
-    <div className="jumbotron">
-      {loading ? <h3>Loading...</h3> : <h3>All Products</h3>}
+    <div className="jumbotron text-danger h1 font-weight-bold text-center">
+      {/* {loading ? <h3>Loading...</h3> : <h3>All Products</h3>} */}
+      <Jumbotron text={['Latest Products', 'Best Sellers']}/>
     </div>
     <div className="container">
       <div className="row">
