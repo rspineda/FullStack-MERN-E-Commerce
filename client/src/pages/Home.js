@@ -29,7 +29,7 @@ const Home = () => {
       <Jumbotron text={['Latest Products', 'Best Sellers']}/>
     </div>
     <div className="container">
-      { loading ? (<LoadingCard/>) : (
+      { loading ? (<LoadingCard count={3}/>) : (
         <div className="row">
           {products.map((product) => (
             <div key={product._id} className="col-md-4">

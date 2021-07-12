@@ -1,10 +1,25 @@
 import React from 'react';
-import { Skeleton } from 'antd';
+import { Card, Skeleton } from 'antd';
 
-const LoadingCard = () => {
+const LoadingCard = ({count}) => {
+    const cards = () => {
+        let totalCards = [];
+        
+        for (let i=0; i < count; i++) {
+            totalCards.push(
+                <Card className="col-md-4">
+                    <Skeleton active/>
+                </Card>
+            );
+        }
+
+        return totalCards;
+    };
 
     return (
-        <Skeleton active></Skeleton>
+        <div className="row pb-5">
+            {cards()}
+        </div>
     )
 };
 
