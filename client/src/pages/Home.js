@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { getProductsByCount } from '../functions/product';
+import {getProducts} from '../functions/product';
 import ProductCard from "../components/cards/ProductCard";
 import Jumbotron from "../components/cards/Jumbotron";
 import LoadingCard from "../components/cards/LoadingCard";
@@ -15,11 +15,11 @@ const Home = () => {
 
   const loadAllProducts = () => {
     setLoading(true);
-    getProductsByCount(3)
+    getProducts('createdAt', 'desc', 3)
     .then((res) => {
       setProducts(res.data);
       setLoading(false);
-    })
+    });
   };
 
   return (
