@@ -16,19 +16,32 @@ const Login = ({history}) => {
 
     const {user} = useSelector((state)=>({...state}));
 
-    //prevent autenticated user to acces: /login
+    
     useEffect(()=>{
+      let intended = history.location.state;
+      if (intended) {
+        return;
+      } else {
+        //prevent autenticated user to acces: /login
         if(user && user.token) history.push("/");
+      }    
     }, [user, history]);
 
     let dispatch = useDispatch();
 
     const roleBasedRedirect = (res) => {
+      //check if user comes from navigating (saved on history state) then authenticated 
+      let intended = history.location.state;
+    
+      if (intended) {
+        history.push(intended.from);
+      } else {
         if (res.data.role === 'admin') {
-            history.push('/admin/dashboard');
+          history.push('/admin/dashboard');
         } else {
             history.push('/user/history');
         }
+      }     
     }
 
     const handleSubmit = async (e) => {

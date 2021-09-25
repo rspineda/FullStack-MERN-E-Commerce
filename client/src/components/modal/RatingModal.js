@@ -9,12 +9,16 @@ const RatingModal = ({children}) => {
   const {user} = useSelector((state) => ({...state}));
   const [modalVisible, setModalVisible] = useState(false);
   let history = useHistory();
+  let {slug} = useParams();
 
   const handleModal = () => {
     if (user && user.token) {
       setModalVisible(true);
     } else {
-      history.push('/login');
+      history.push({
+        pathname: '/login',
+        state: { from: `/product/${slug}`}
+      };
     }
   }
 
