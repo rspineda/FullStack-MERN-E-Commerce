@@ -29,6 +29,6 @@ router.post('/products', list);
 //Pagination
 router.get('/products/total', productsCount);
 //rating
-router.put('/products/star/:productId', authCheck, productStar);
+router.put('/product/star/:productId', authCheck, productStar);
 
 module.exports = router;

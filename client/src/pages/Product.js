@@ -1,10 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import {getProduct} from '../functions/product';
+import {getProduct, productStar} from '../functions/product';
 import SingleProduct from '../components/cards/SingleProduct';
+import { useSelector } from 'react-redux';
 
 const Product = ({match}) => {
   const [product, setProduct] = useState({});
+  const [stars, setStars] = useState(0);
   const {slug} = match.params;
+  const {user} = useSelector((state) => ({...state}));
 
   useEffect(() => {
     loadSingleProduct();
@@ -16,7 +19,11 @@ const Product = ({match}) => {
   };
 
   const onStarClick = (newRating, name) => {
-    console.log(newRating, name);
+    setStars(newRating);
+    productStar(name, newRating, user.token )
+    .then((res) => {
+      loadSingleProduct(); //showing the new rating applied to the user
+    })
   }
 
   return (
@@ -25,6 +32,7 @@ const Product = ({match}) => {
         <SingleProduct 
           product={product}
           onStarClick={onStarClick}
+          stars={stars}
         />
       </div>
 
