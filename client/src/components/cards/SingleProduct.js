@@ -11,7 +11,8 @@ import RatingModal from '../modal/RatingModal';
 
 const {TabPane} = Tabs;
 
-const SingleProduct = ({product}) => {
+//children component of Product Page.
+const SingleProduct = ({product, onStarClick}) => {
 
   const {title, images, description, _id} = product;
 
@@ -59,7 +60,7 @@ const SingleProduct = ({product}) => {
                 name={_id}
                 numberOfStars={5}
                 rating={2}
-                changeRating={(newRating, name) => console.log('NEWRATING:', newRating, 'NAME:', name) }
+                changeRating={onStarClick}
                 isSelectable={true}
                 starRatedColor="rgb(252, 215, 3)"
               />

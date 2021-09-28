@@ -15,10 +15,17 @@ const Product = ({match}) => {
     .then((res) => setProduct(res.data));
   };
 
+  const onStarClick = (newRating, name) => {
+    console.log(newRating, name);
+  }
+
   return (
     <div className="container-fluid">
       <div className="row pt-4">
-        <SingleProduct product={product}/>
+        <SingleProduct 
+          product={product}
+          onStarClick={onStarClick}
+        />
       </div>
 
       <div className="row">
