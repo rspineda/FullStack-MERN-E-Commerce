@@ -13,6 +13,17 @@ const Product = ({match}) => {
     loadSingleProduct();
   }, [slug]);
 
+  useEffect(() => {
+    //finding last user's rating so it can be shown on the modal if it wants to rate agin 
+    if(product.ratings && user) {
+      let existingRatingObject = product.ratings.find(
+        (ele) => (ele.postedBy.toString() === user._id.toString())
+      );
+      console.log(existingRatingObject);
+      existingRatingObject && setStars(existingRatingObject.star);
+    }
+  }, []);
+
   const loadSingleProduct = () => {
     getProduct(slug)
     .then((res) => setProduct(res.data));

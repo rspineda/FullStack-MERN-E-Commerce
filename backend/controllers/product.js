@@ -88,14 +88,14 @@ exports.productsCount = async (req, res) => {
 };
 
 exports.productStar = async (req, res) => {
-  const product = await (await Product.findById(req.paramas.productId)).exec();
+  const product = await Product.findById(req.params.productId).exec();
   const user = await User.findOne({email: req.user.email}).exec();
   const {star} = req.body;
 
   //¿current loggedin user have already added a rating to the product?
   let existingRatingObject = product.ratings.find(
     (ele) => (ele.postedBy.toString() === user._id.toString())
-    ); 
+  ); 
   //user hasn't left rating yet --> push the new rating
   if(existingRatingObject === undefined) {
     let ratingAdded = await Product.findByIdAndUpdate(product._id, {
@@ -109,7 +109,7 @@ exports.productStar = async (req, res) => {
       {
         ratings: { $elemMatch: existingRatingObject },
       },{
-        $set: { "rating.$.star": star}
+        $set: { "ratings.$.star": star}
       },{
         new: true
       }
