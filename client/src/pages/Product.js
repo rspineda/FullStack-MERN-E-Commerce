@@ -22,7 +22,7 @@ const Product = ({match}) => {
       console.log(existingRatingObject);
       existingRatingObject && setStars(existingRatingObject.star);
     }
-  }, []);
+  });
 
   const loadSingleProduct = () => {
     getProduct(slug)
