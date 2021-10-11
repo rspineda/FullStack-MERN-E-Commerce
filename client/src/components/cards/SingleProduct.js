@@ -46,7 +46,7 @@ const SingleProduct = ({product, onStarClick, stars}) => {
 
         {product && product.ratings && product.ratings.length > 0 
           ? showAverage(product) 
-          : "No raing yet"}
+          : <div className="text-center pt-1 pb-3">No rating yet</div>}
 
         <Card
           actions={[
